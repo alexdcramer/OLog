@@ -16,13 +16,14 @@ import net.oijon.olog.Log;
 
 public class UnitTests {
 
-	Log log = new Log(System.getProperty("user.home") + "/OijonUtils");
+	File file = new File(System.getProperty("user.home") + "/.olog");
+	Log log = new Log(System.getProperty("user.home") + "/.olog");
 
 	@Test
 	void testLog() {
 		File logFile = new File(log.getLogFile());
 		log.info("This is a test of " + Info.getVersion());
-		log.info("This will create two folders under the home directory, OijonUtils and OijonUtils2. These can be deleted after the test.");
+		log.info("This will create a folder under the home directory, .olog. These will be deleted after the test.");
 		log.info("Your home directory is " + System.getProperty("user.home"));
 		log.info("=====BEGIN LOGGER TEST=====");
 		log.info("Log file at " + log.getLogFile().toString());
@@ -53,6 +54,18 @@ public class UnitTests {
 			e.printStackTrace();
 			fail(); // failing here as this means the getLogFile() method has failed.
 		}
+		log.info("Test successful. Deleting .olog directory...");
+		deleteDirectory(file);
+	}
+	
+	boolean deleteDirectory(File directoryToBeDeleted) {
+	    File[] allContents = directoryToBeDeleted.listFiles();
+	    if (allContents != null) {
+	        for (File file : allContents) {
+	            deleteDirectory(file);
+	        }
+	    }
+	    return directoryToBeDeleted.delete();
 	}
 	
 }
