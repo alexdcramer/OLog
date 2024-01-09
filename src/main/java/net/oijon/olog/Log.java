@@ -28,15 +28,14 @@ public class Log {
 	private boolean debug = true;
 	private File file;
 	private String today;
-	private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-	private String now;
-	private File tempFile;
+	private String now;	
 	
-	AnsiFormat fDebug = new AnsiFormat(WHITE_TEXT());
-	AnsiFormat fInfo = new AnsiFormat(CYAN_TEXT());
-	AnsiFormat fWarn = new AnsiFormat(BLACK_TEXT(), YELLOW_BACK());
-	AnsiFormat fError = new AnsiFormat(WHITE_TEXT(), RED_BACK());
-	AnsiFormat fCritical = new AnsiFormat(BOLD(), RED_TEXT(), YELLOW_BACK());
+	private static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+	private static AnsiFormat fDebug = new AnsiFormat(WHITE_TEXT());
+	private static AnsiFormat fInfo = new AnsiFormat(CYAN_TEXT());
+	private static AnsiFormat fWarn = new AnsiFormat(BLACK_TEXT(), YELLOW_BACK());
+	private static AnsiFormat fError = new AnsiFormat(WHITE_TEXT(), RED_BACK());
+	private static AnsiFormat fCritical = new AnsiFormat(BOLD(), RED_TEXT(), YELLOW_BACK());
 	
 	/**
 	 * Creates the log object. This should only be used in the main class, unless you want multiple log files.
@@ -44,16 +43,6 @@ public class Log {
 	 * @param logdir The directory, in string format, of the log.
 	 */
 	public Log(String logdir) {
-		this(logdir, false);
-	}
-	
-	/**
-	 * Creates the log object.
-	 * Please note: This will create a directory under the directory specified called "/logs/".
-	 * @param logdir The directory, in string format, of the log.
-	 * @param useCurrent True if a log file already exists, false otherwise
-	 */
-	public Log(String logdir, boolean useCurrent) {
 		File logFolder = new File(logdir + "/logs/");
 		logFolder.mkdirs();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -65,67 +54,28 @@ public class Log {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		File tempFile = new File(logdir + "/logs/.logtmp");
 		int i = 0;
 		while (logFile.exists()) {
-			
 			i++;
-			logFile = new File(logdir + "/logs/" + this.today + "(" + i + ")" + ".log");
 		}
-		if (useCurrent) {
-			if (i > 0) {
-				i--;
-				if (i == 0) {
-					logFile = new File(logdir + "/logs/" + this.today + ".log");
-				} else {
-					logFile = new File(logdir + "/logs/" + this.today + "(" + i + ")" + ".log");
-				}
-			}
-		} else {
-			try {
-				File logDir = new File(logdir + "/logs/");
-				logDir.mkdirs();
-				logFile.createNewFile();
-				tempFile.createNewFile();
-				FileWriter fw = new FileWriter(tempFile, true);
-				BufferedWriter bw = new BufferedWriter(fw);
-				bw.write(logFile.toString());
-				bw.close();
-			} catch (IOException e) {
-				e.printStackTrace();
+		if (i > 0) {
+			i--;
+			if (i == 0) {
+				logFile = new File(logdir + "/logs/" + this.today + ".log");
+			} else {
+				logFile = new File(logdir + "/logs/" + this.today + "(" + i + ")" + ".log");
 			}
 		}
 		this.file = logFile;
 	}
-	
+
 	/**
 	 * Sets the definition of "now", as in what is the time the print was sent out
 	 */
 	private void setNow() {
 		LocalDateTime now = LocalDateTime.now();
-		this.now = this.dtf.format(now);
+		this.now = dtf.format(now);
 	}
-	
-	/**
-	 * Reads the temp file and gets the current log file
-	 * @return
-	 
-	private File readTempFile() {
-		try {
-			Scanner sc = new Scanner(tempFile);
-			String filePath = "";
-			while(sc.hasNextLine()) {
-				filePath = sc.nextLine();
-			}
-			sc.close();
-			File logFile = new File(filePath);
-			return logFile;
-		} catch (FileNotFoundException e) {
-			this.err(e.toString());
-			return null;
-		}
-	}
-	*/
 	
 	/**
 	 * Logs console input to the log
@@ -223,16 +173,6 @@ public class Log {
 			this.err(e.toString());
 			e.printStackTrace();
 		}
-	}
-	/**
-	 * Currently does not do anything, as the temp file does not actually control the file used anymore
-	 * @deprecated As of Oijon Utils v1.1.2, as the way file selection is handled has changed. Please use the true/false flag on log creation instead.
-	 */
-	@Deprecated
-	public void closeLog() {
-		this.info("Closing log...");
-		this.tempFile.delete();
-		this.info("Log closed.");
 	}
 	
 	/**
