@@ -13,7 +13,7 @@ public class Info {
 	private static String fullVersion = "OLog - v" + versionNum;
 	
 	private static String generateVersionNum() {
-		return "1.0.0";
+		return "1.0.1";
 	}
 	
 	/**
