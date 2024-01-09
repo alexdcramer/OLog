@@ -1,5 +1,6 @@
 package olog;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -16,15 +17,16 @@ import net.oijon.olog.Log;
 
 public class UnitTests {
 
-	File file = new File(System.getProperty("user.home") + "/.olog");
-	Log log = new Log(System.getProperty("user.home") + "/.olog");
-
 	@Test
 	void testLog() {
+		File file = new File(System.getProperty("user.home") + "/.olog");
+		Log log = new Log(file);
 		File logFile = new File(log.getLogFile());
+		/**
 		for (Object key : System.getProperties().keySet()) {
 			log.info(key.toString() + ":" + System.getProperty(key.toString()));
 		}
+		*/
 		log.info("This is a test of " + Info.getVersion());
 		log.info("This will create a folder under the home directory, .olog. These will be deleted after the test.");
 		log.info("Your home directory is " + System.getProperty("user.home"));

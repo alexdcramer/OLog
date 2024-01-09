@@ -37,6 +37,10 @@ public class Log {
 	private static AnsiFormat fError = new AnsiFormat(WHITE_TEXT(), RED_BACK());
 	private static AnsiFormat fCritical = new AnsiFormat(BOLD(), RED_TEXT(), YELLOW_BACK());
 	
+	public Log(File logdir) {
+		this(logdir.getAbsolutePath());
+	}
+	
 	/**
 	 * Creates the log object. This should only be used in the main class, unless you want multiple log files.
 	 * Please note: This will create a directory under the directory specified called "/logs/".
@@ -57,6 +61,7 @@ public class Log {
 		int i = 0;
 		while (logFile.exists()) {
 			i++;
+			logFile = new File(logdir + "/logs/" + this.today + "(" + i + ")" + ".log");
 		}
 		if (i > 0) {
 			i--;
