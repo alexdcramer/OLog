@@ -73,14 +73,6 @@ public class Log {
 		}
 		this.file = logFile;
 	}
-
-	/**
-	 * Sets the definition of "now", as in what is the time the print was sent out
-	 */
-	private void setNow() {
-		LocalDateTime now = LocalDateTime.now();
-		this.now = dtf.format(now);
-	}
 	
 	/**
 	 * Logs console input to the log
@@ -148,8 +140,20 @@ public class Log {
 		this.debug("=====================");
 	}
 	
-	public void setDebug(boolean bool) {
-		debug = bool;
+	/**
+	 * Checks if a log is printing debug messages
+	 * @return If a log is printing debug messages
+	 */
+	public boolean isDebug() {
+		return debug;
+	}
+	
+	/**
+	 * Sets if debug messages should be printed
+	 * @param debug true to print debug messages, false to not print them
+	 */
+	public void setDebug(boolean debug) {
+		this.debug = debug;
 	}
 	
 	/**
@@ -159,13 +163,18 @@ public class Log {
 	 * @param color The color to print in the console
 	 */
 	private void log(String prefix, String input, AnsiFormat color) {
-		setNow();
+		LocalDateTime now = LocalDateTime.now();
+		this.now = dtf.format(now);
 		String output = String.format("%-10s", "[" + prefix + "]") + 
 				" [" + this.now + "] - " + input;
 		System.out.println(color.format(output));
 		write(output);
 	}
 	
+	/**
+	 * Writes a line to the log file
+	 * @param input The text to write to the file
+	 */
 	private void write(String input) {
 		try {
 			FileWriter fw = new FileWriter(file, true);

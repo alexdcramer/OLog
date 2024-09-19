@@ -33,8 +33,10 @@ public class UnitTests {
 		log.info("=====BEGIN LOGGER TEST=====");
 		log.info("Log file at " + log.getLogFile().toString());
 		log.setDebug(true);
+		assertTrue(log.isDebug());
 		log.debug("This is a test of a debug message. The debug marker has been set to true.");
 		log.setDebug(false);
+		assertFalse(log.isDebug());
 		log.debug("This is a test of a debug message. The debug marker has been set to false.");
 		log.info("This is a test of an info message.");
 		log.warn("This is a test of a warning message.");
