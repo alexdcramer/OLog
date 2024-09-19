@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.oijon</groupId>
 	<artifactId>olog</artifactId>
-	<version>1.0.2-SNAPSHOT</version>
+	<version>1.0.2</version>
 	<name>OLog</name>
 	<description>A logging utility, formerly part of Oijon Utils</description>
 	<url>https://oijon.net/olog</url>
