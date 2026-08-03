@@ -9,9 +9,9 @@
 	<description>A logging utility, formerly part of Oijon Utils</description>
 	<url>https://oijon.net/olog</url>
 	<scm>
-		<connection>scm:git:git@github.com/alexdcramer/OLog.git</connection>
-		<developerConnection>scm:git:git@github.com:alexdcramer/OLog.git</developerConnection>
-		<url>git@github.com/alexdcramer/OLog/tree/main</url>
+		<connection>scm:git:git@github.com/thetacola/OLog.git</connection>
+		<developerConnection>scm:git:git@github.com:thetacola/OLog.git</developerConnection>
+		<url>git@github.com/thetacola/OLog/tree/main</url>
 		<tag>v${project.version}</tag>
 	</scm>
 	<properties>
@@ -19,12 +19,6 @@
 		<maven.compiler.target>11</maven.compiler.target>
 	</properties>
 	<dependencies>
-		<!-- https://mvnrepository.com/artifact/com.diogonunes/JColor -->
-		<dependency>
-			<groupId>com.diogonunes</groupId>
-			<artifactId>JColor</artifactId>
-			<version>5.5.1</version>
-		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>

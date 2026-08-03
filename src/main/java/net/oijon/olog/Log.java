@@ -2,7 +2,6 @@ package net.oijon.olog;
 
 import java.io.BufferedWriter;
 import java.io.File;
-//import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -10,11 +9,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Enumeration;
 import java.util.Properties;
-//import java.util.Scanner;
-import com.diogonunes.jcolor.AnsiFormat;
-import static com.diogonunes.jcolor.Attribute.*;
 
-//last edit: 10/22/2023 -N3
+//last edit: 8/3/2026 -N3
 
 
 
@@ -31,11 +27,12 @@ public class Log {
 	private String now;	
 	
 	private static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-	private static AnsiFormat fDebug = new AnsiFormat(WHITE_TEXT());
-	private static AnsiFormat fInfo = new AnsiFormat(CYAN_TEXT());
-	private static AnsiFormat fWarn = new AnsiFormat(BLACK_TEXT(), YELLOW_BACK());
-	private static AnsiFormat fError = new AnsiFormat(WHITE_TEXT(), RED_BACK());
-	private static AnsiFormat fCritical = new AnsiFormat(BOLD(), RED_TEXT(), YELLOW_BACK());
+	private static String RESET = "\u001B[0m";
+	private static String F_DEBUG = "\u001B[97m";
+	private static String F_INFO = "\u001B[96m";
+	private static String F_WARN = "\u001B[30m\u001B[103m";
+	private static String F_ERROR = "\u001B[97m\u001B[101m";
+	private static String F_CRITICAL = "\u001B[1m\u001B[91m\u001B[103m";
 	
 	public Log(File logdir) {
 		this(logdir.getAbsolutePath());
@@ -88,7 +85,7 @@ public class Log {
 	 */
 	public void debug(String input) {
 		if (debug) {
-			log("DEBUG", input, fDebug);
+			log("DEBUG", input, F_DEBUG);
 		}
 	}
 	
@@ -97,7 +94,7 @@ public class Log {
 	 * @param input What is to be printed
 	 */
 	public void info(String input) {
-		log("INFO", input, fInfo);
+		log("INFO", input, F_INFO);
 	}
 	
 	/**
@@ -105,7 +102,7 @@ public class Log {
 	 * @param input What is to be printed
 	 */
 	public void warn(String input) {
-		log("WARN", input, fWarn);
+		log("WARN", input, F_WARN);
 	}
 	
 	/**
@@ -113,7 +110,7 @@ public class Log {
 	 * @param input What is to be printed
 	 */
 	public void err(String input) {
-		log("ERROR", input, fError);
+		log("ERROR", input, F_ERROR);
 	    
 	}
 	/**
@@ -121,7 +118,7 @@ public class Log {
 	 * @param input What is to be printed
 	 */
 	public void critical(String input) {
-		log("CRITICAL", input, fCritical);
+		log("CRITICAL", input, F_CRITICAL);
 	}
 	
 	/**
@@ -160,14 +157,14 @@ public class Log {
 	 * Prints out to a file and to console given a prefix and color
 	 * @param prefix The prefix of the line to print, for example [INFO]
 	 * @param input The message to print
-	 * @param color The color to print in the console
+	 * @param color The ANSI escape codes to print in the console
 	 */
-	private void log(String prefix, String input, AnsiFormat color) {
+	private void log(String prefix, String input, String color) {
 		LocalDateTime now = LocalDateTime.now();
 		this.now = dtf.format(now);
 		String output = String.format("%-10s", "[" + prefix + "]") + 
 				" [" + this.now + "] - " + input;
-		System.out.println(color.format(output));
+		System.out.println(color + output + RESET);
 		write(output);
 	}
 	

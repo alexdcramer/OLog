@@ -1,6 +1,6 @@
 package net.oijon.olog.info;
 
-//last edit: 10/22/23 -N3
+//last edit: 8/3/2026 -N3
 
 /**
  * A class to get the version information of the current build
@@ -13,7 +13,7 @@ public class Info {
 	private static String fullVersion = "OLog - v" + versionNum;
 	
 	private static String generateVersionNum() {
-		return "1.0.2";
+		return "1.1.0";
 	}
 	
 	/**
