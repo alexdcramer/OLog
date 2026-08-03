@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.oijon</groupId>
 	<artifactId>olog</artifactId>
-	<version>1.0.2</version>
+	<version>1.1.0</version>
 	<name>OLog</name>
 	<description>A logging utility, formerly part of Oijon Utils</description>
 	<url>https://oijon.net/olog</url>
@@ -138,6 +138,7 @@
 							<goal>sign</goal>
 						</goals>
 						<configuration>
+							<keyname>F55C138ABA14AF7585D47F7862AABFE6ED886F7D</keyname>
 							<gpgArguments>
 								<arg>--pinentry-mode</arg>
 								<arg>loopback</arg>
